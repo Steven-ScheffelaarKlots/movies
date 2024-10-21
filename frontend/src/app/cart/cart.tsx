@@ -30,7 +30,16 @@ const CartComponent: React.FC = () => {
 
   return (
     <div className="cart-container">
-      <button className="cart-button" onClick={toggleModal}>Open Cart</button>
+      <button className="submit-button" onClick={toggleModal}>
+        🛒 Cart - $
+        {cartItems
+          .reduce(
+        (total: number, item: CartItemType) =>
+          total + item.price * item.quantity,
+        0
+          )
+          .toFixed(2)}
+      </button>
       <ModalComponent show={isOpen} onClose={toggleModal}>
         <h2 className="cart-title">Shopping Cart</h2>
         <ul className="cart-items">
@@ -62,7 +71,7 @@ const CartComponent: React.FC = () => {
           </h3>
         </div>
         <div className="modal-footer">
-          <button className="checkout-button" onClick={handleCheckout}>Checkout</button>
+          <button className="submit-button" onClick={handleCheckout}>Checkout</button>
           <button className="cancel-button" onClick={toggleModal}>Cancel</button>
         </div>
       </ModalComponent>

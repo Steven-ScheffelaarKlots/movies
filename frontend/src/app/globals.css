@@ -9,7 +9,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #4a4a4a;
+    --background: #d3d3d3;
     --foreground: #000000;
   }
 }
@@ -24,4 +24,38 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.submit-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #d3d3d3;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background-color: #a9a9a9;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+.title {
+  font-size: 74px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }

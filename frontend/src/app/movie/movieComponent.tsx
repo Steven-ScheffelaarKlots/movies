@@ -1,6 +1,7 @@
-"use client";
 import React, { useState, useContext } from "react";
 import { CartContext, CartItemType } from "../context/cartContext";
+import Notification from "../notification/notification";
+import "./movieComponent.css";
 
 interface MovieProps {
   movie: {
@@ -16,6 +17,7 @@ interface MovieProps {
 
 const MovieComponent: React.FC<MovieProps> = (props) => {
   const [expanded, setExpanded] = useState(false);
+  const [notification, setNotification] = useState<string | null>(null);
   const { cartItems, setCartItems } = useContext(CartContext);
 
   const handleToggle = () => {
@@ -23,33 +25,28 @@ const MovieComponent: React.FC<MovieProps> = (props) => {
     setExpanded(!expanded);
   };
 
-const addToCart = () => {
-    const existingItemIndex = cartItems.findIndex((item: CartItemType) => item.title === props.movie.title);
+  const addToCart = () => {
+    const existingItemIndex = cartItems.findIndex(
+      (item: CartItemType) => item.title === props.movie.title
+    );
     if (existingItemIndex !== -1) {
-        const updatedCartItems = cartItems.map((item: CartItemType, index: number) => 
-            index === existingItemIndex ? { ...item, quantity: item.quantity + 1 } : item
-        );
-        setCartItems(updatedCartItems);
+      const updatedCartItems = cartItems.map(
+        (item: CartItemType, index: number) =>
+          index === existingItemIndex
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+      );
+      setCartItems(updatedCartItems);
     } else {
-        setCartItems([...cartItems, { ...props.movie, quantity: 1 }]);
+      setCartItems([...cartItems, { ...props.movie, quantity: 1 }]);
     }
-};
+    setNotification(`${props.movie.title} has been added to the cart.`);
+    setTimeout(() => setNotification(null), 3000); // Hide notification after 3 seconds
+  };
 
   return (
-    <div
-      onClick={handleToggle}
-      style={{
-        cursor: "pointer",
-        backgroundColor: "white",
-        border: "1px solid gray",
-        borderRadius: "8px",
-        padding: "16px",
-        width: "100%",
-        boxSizing: "border-box",
-        position: "relative",
-      }}
-    >
-      <h1 style={{ fontWeight: "bold" }}>{props.movie.title}</h1>
+    <div className="movie moviebox">
+      <h1>{props.movie.title}</h1>
       <p>Year of Release: {props.movie.year_of_release}</p>
       <p>Price: ${props.movie.price.toFixed(2)}</p>
       {expanded && (
@@ -60,56 +57,27 @@ const addToCart = () => {
         </>
       )}
       <div
+        className="toggle-movie"
         onClick={(e) => {
           e.stopPropagation();
           handleToggle();
         }}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "8px",
-        }}
       >
-        <span
-          style={{
-            display: "inline-block",
-            transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
-            transition: "transform 0.3s ease",
-          }}
-        >
-          ▼
-        </span>
+        <span className={`toggle-icon ${expanded ? "expanded" : ""}`}>▼</span>
       </div>
       <button
+        className="movie submit-button"
         onClick={(e) => {
           e.stopPropagation();
           addToCart();
         }}
-        style={{
-          position: "absolute",
-          right: "16px",
-          top: "16px",
-          padding: "8px 16px",
-          backgroundColor: "#007bff",
-          color: "white",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer",
-        }}
       >
         Add to Cart
       </button>
-      <p
-        style={{
-          position: "absolute",
-          right: "16px",
-          top: "56px",
-          color: "gray",
-        }}
-      >
+      <p className="movie stock-remaining">
         Stock Remaining: {props.movie.stock}
       </p>
+      {notification && <Notification message={notification} />}
     </div>
   );
 };

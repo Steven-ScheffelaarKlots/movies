@@ -46,6 +46,10 @@
     padding-top: 10px;
 }
 
+.modal-footer > * {
+    margin: 0 5px;
+}
+
 .modal-overlay {
     position: fixed;
     top: 0;

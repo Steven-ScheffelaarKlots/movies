@@ -17,8 +17,7 @@ interface MovieListComponentProps {
 
 const MovieListComponent: React.FC<MovieListComponentProps> = (props) => {
     return (
-        <div>
-            <h1>Movie List</h1>
+        <div >
             <ul>
                 {props.movies.map((movie, index) => (
                     <li key={index}>

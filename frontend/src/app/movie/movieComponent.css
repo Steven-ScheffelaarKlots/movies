@@ -1,0 +1,44 @@
+.movie.submit-button {
+    position: absolute;
+    right: 16px;
+    top: 6px;
+}
+
+.movie.stock-remaining {
+    position: absolute;
+    right: 16px;
+    top: 56px;
+    color: gray;
+}
+
+.movie.moviebox {
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 8px;
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.movie h1 {
+    font-weight: bold;
+}
+
+.toggle-movie {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.toggle-icon {
+    display: inline-block;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+.toggle-icon.expanded {
+    transform: rotate(180deg);
+}

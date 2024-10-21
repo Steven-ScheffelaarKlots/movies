@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { returnMovies, fetchCheckedOutMovies } from '@/utils/api';
+import React, { useEffect, useContext, useState } from 'react';
+import { returnMovies, fetchCheckedOutMovies, getMovies } from '@/utils/api';
+import { MovieContext } from '../context/movieContext';
 import ModalComponent from '../modal/modal';
+import './checkedOut.css';
 
 interface Movie {
     id: number;
@@ -11,6 +13,7 @@ interface Movie {
 const CheckedOutComponent: React.FC = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [selectedMovies, setSelectedMovies] = useState<Movie[]>([]);
+    const { movieData, setMovieData } = useContext(MovieContext);
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
@@ -33,20 +36,25 @@ const CheckedOutComponent: React.FC = () => {
         });
     };
 
-    const handleReturnMovies = () => {
-        returnMovies(selectedMovies)
-            .then(() => {
-                setMovies(prevMovies => prevMovies.filter(movie => !selectedMovies.includes(movie)));
-                setSelectedMovies([]);
-                toggleModal();
-            })
-            .catch(error => console.error('Error returning movies:', error));
+    const handleReturnMovies = async () => {
+        try {
+            await returnMovies(selectedMovies);
+            setMovies(prevMovies => prevMovies.filter(movie => !selectedMovies.includes(movie)));
+            setSelectedMovies([]);
+            const updatedMovies = await getMovies();
+            setMovieData(updatedMovies);
+            toggleModal();
+        } catch (error) {
+            console.error('Error returning movies:', error);
+        }
     };
 
     return (
-        <div>
+        <div className="checkedOut-container">
+            <button className="submit-button" onClick={toggleModal}>Checked Out Movies</button>
             <ModalComponent show={isOpen} onClose={toggleModal}>
                 <h1>Checked Out Movies</h1>
+                <p>Total Checked Out Movies: {movies.length}</p>
                 <ul>
                     {movies.map(movie => (
                         <li key={movie.id}>
@@ -61,10 +69,11 @@ const CheckedOutComponent: React.FC = () => {
                         </li>
                     ))}
                 </ul>
-                <button onClick={handleReturnMovies}>Return Selected Movies</button>
+                <div className="modal-footer">
+                    <button className="submit-button"onClick={handleReturnMovies}>Return Selected Movies</button>
+                    <button className="cancel-button" onClick={toggleModal}>Cancel</button>
+                </div>
             </ModalComponent>
-            <button onClick={toggleModal}>Open Modal</button>
-        
         </div>
     );
 };
