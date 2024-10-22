@@ -41,7 +41,6 @@ const MovieComponent: React.FC<MovieProps> = (props) => {
       setCartItems([...cartItems, { ...props.movie, quantity: 1 }]);
     }
     setNotification(`${props.movie.title} has been added to the cart.`);
-    setTimeout(() => setNotification(null), 3000); // Hide notification after 3 seconds
   };
 
   return (

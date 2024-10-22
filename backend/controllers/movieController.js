@@ -11,47 +11,6 @@ exports.getMovies = (req, res) => {
     }
 };
 
-// Get a single movie by ID
-exports.getMovieById = (req, res) => {
-    try {
-        const movie = movies.find(m => m.id === parseInt(req.params.id));
-        if (!movie) {
-            return res.status(404).send();
-        }
-        res.status(200).send(movie);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-};
-
-// Update a movie by ID
-exports.updateMovie = (req, res) => {
-    try {
-        const movie = movies.find(m => m.id === parseInt(req.params.id));
-        if (!movie) {
-            return res.status(404).send();
-        }
-        Object.assign(movie, req.body);
-        res.status(200).send(movie);
-    } catch (error) {
-        res.status(400).send(error);
-    }
-};
-
-// Delete a movie by ID
-exports.deleteMovie = (req, res) => {
-    try {
-        const movieIndex = movies.findIndex(m => m.id === parseInt(req.params.id));
-        if (movieIndex === -1) {
-            return res.status(404).send();
-        }
-        const deletedMovie = movies.splice(movieIndex, 1);
-        res.status(200).send(deletedMovie[0]);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-};
-
 // Checkout movies
 exports.checkoutMovie = (req, res) => {
     try {

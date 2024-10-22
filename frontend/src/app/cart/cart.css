@@ -13,12 +13,6 @@
     margin-bottom: 20px;
 }
 
-.cart-items {
-    width: 100%;
-    max-width: 800px;
-    margin-bottom: 20px;
-}
-
 .cart-item {
     display: flex;
     justify-content: space-between;
@@ -29,15 +23,6 @@
 
 .cart-item:last-child {
     border-bottom: none;
-}
-
-.cart-item-name {
-    font-size: 18px;
-}
-
-.cart-item-price {
-    font-size: 18px;
-    color: #333;
 }
 
 .cart-total {

@@ -14,40 +14,12 @@
     padding: 20px;
 }
 
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e5e5e5;
-    padding-bottom: 10px;
-}
-
-.modal-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-}
-
 .modal-close {
     background: none;
     border: none;
     font-size: 1.25rem;
     cursor: pointer;
     margin-left: auto;
-}
-
-.modal-body {
-    padding: 20px 0;
-}
-
-.modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    border-top: 1px solid #e5e5e5;
-    padding-top: 10px;
-}
-
-.modal-footer > * {
-    margin: 0 5px;
 }
 
 .modal-overlay {
